@@ -1,11 +1,5 @@
-using System.Text;
-using API.Data;
 using API.Extensions;
-using API.interfaces;
-using API.services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using API.Middleware;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -42,13 +36,7 @@ namespace API
         // This method adds following middleware to the pipeline in the order they are listed:
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
-            }
-
+            app.UseMiddleware<ExceptionMiddleware>();
             // app.UseHttpsRedirection();
             app.UseRouting();
 
